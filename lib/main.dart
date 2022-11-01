@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:final_fifa/pages/counter/counter_page.dart';
-import 'package:final_fifa/pages/food_list/home_page.dart';
+import 'package:final_fifa/pages/home.dart';
+import 'package:final_fifa/pages/result.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const FoodListPage(),
+      routes: {
+        Result.routeName : (context) => const Result(),
+      },
     );
   }
 }

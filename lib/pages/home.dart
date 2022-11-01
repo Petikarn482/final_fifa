@@ -1,5 +1,6 @@
+import 'package:final_fifa/pages/result.dart';
 import 'package:flutter/material.dart';
-import 'package:final_fifa/models/team_item.dart';
+import 'package:final_fifa/models/team.dart';
 import 'package:final_fifa/urlapi/api.dart';
 
 class FoodListPage extends StatefulWidget {
@@ -11,7 +12,7 @@ class FoodListPage extends StatefulWidget {
 
 class _FoodListPageState extends State<FoodListPage> {
   static const apiBaseUrl = 'http://103.74.252.66:8888';
-  List<TeamItem>? _list;
+  List<Team>? _list;
   var _isLoading = false;
   String? _errMessage;
 
@@ -36,7 +37,7 @@ class _FoodListPageState extends State<FoodListPage> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                color: Colors.white,
+                  color: Colors.white,
                   alignment: Alignment.topCenter,
                   child: Image(
                     image: AssetImage("assets/images/logo.jpg"),
@@ -81,10 +82,10 @@ class _FoodListPageState extends State<FoodListPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.redAccent,
+                    primary: Colors.red,
                   ),
                   onPressed: () {
-                    _fetchData();
+                    Navigator.pushNamed(context,Result.routeName,);
                   },
                   child: const Text('View Result'),
                 ),
@@ -104,13 +105,23 @@ class _FoodListPageState extends State<FoodListPage> {
     try {
       var data = await Api().fetch();
       setState(() {
-        _list = data.map<TeamItem>((item) => TeamItem.fromJson(item)).toList();
+        _list = data.map<Team>((item) => Team.fromJson(item)).toList();
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
         _errMessage = e.toString();
         _isLoading = false;
+      });
+    }
+  }
+
+  void _Vote(int index) async {
+    try {
+      await Api().vote(index);
+    } catch (e) {
+      setState(() {
+        _errMessage = e.toString();
       });
     }
   }
@@ -152,10 +163,10 @@ class _FoodListPageState extends State<FoodListPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.redAccent,
+                  primary: Colors.red,
                 ),
                 onPressed: () {
-                  _fetchData();
+                  _Vote(index+1);
                 },
                 child: const Text('Vote'),
               ),

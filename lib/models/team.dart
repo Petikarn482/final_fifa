@@ -1,11 +1,11 @@
-class TeamItem {
+class Team {
   final int id;
   final String team;
   final String group;
   final String flagImage;
   final int voteCount;
 
-  TeamItem({
+  Team({
     required this.id,
     required this.team,
     required this.group,
@@ -13,8 +13,8 @@ class TeamItem {
     required this.voteCount,
   });
 
-  factory TeamItem.fromJson(Map<String, dynamic> json) {
-    return TeamItem(
+  factory Team.fromJson(Map<String, dynamic> json) {
+    return Team(
       id: json['id'],
       team: json['team'],
       group: json['group'],
@@ -23,8 +23,8 @@ class TeamItem {
     );
   }
 
-  // teamd constructor
-  TeamItem.fromJson2(Map<String, dynamic> json)
+  // team constructor
+  Team.fromJson2(Map<String, dynamic> json)
       : id = json['id'],
         team = json['team'],
         group = json['group'],
